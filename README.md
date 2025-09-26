@@ -1,54 +1,92 @@
-## Super Simple LangChain Powered Chatbot  
+# Custom Agentforce Chatbot Web Component
 
-### How this thing works  
+A standalone web component for creating a modern, streaming chat interface that interacts with the Salesforce Agentforce API. This project uses a lightweight Python FastAPI server to host the front-end application and manage dependencies.  
+  
+The intent of this is to have a working example of a custom built chatbot interacting with the Agentforce API in as simple a fashion as possible.  
 
-When you get it running, it looks like this:  
+## Key Features
 
-![Screenshot](./doc/2024-10-04_18-20-36.png "Screenshot")
+* **Web Component:** The chatbot is encapsulated as a `<generic-chatbot>` custom element, making it highly portable and easy to embed in any web page or framework (e.g., Salesforce Lightning Web Components, Aura, or any standard web app).
+* **Salesforce Agentforce API Integration:** Handles the full conversational flow, including session management (start, end) and message streaming.
+* **OAuth 2.0 Client Credentials Flow:** Securely retrieves the necessary access token for Agentforce API calls using the configured Client ID and Secret.
+* **Streaming Response:** Messages from the Agentforce API are streamed back to the UI for a real-time user experience.
+* **In-Browser Configuration:** All required connection details (`Client ID`, `Client Secret`, `Agent ID`, `My Domain URL`) can be configured and persisted in the browser's local storage via a dedicated configuration modal.
+* **Markdown Support:** Assistant responses are rendered with markdown formatting for enhanced readability, using the `marked` library via a custom `<convert-markdown>` element.
 
-The code is meant to be as portable as possible.  I used a standards based browser friendly generic web component  
-It should just drop into whatever framework your developer wants to use  
 
-This sample uses a service called Tavily to do some internet searches.  You will need to go to [tavily.com](https://tavily.com/#api) and get an API key to use it.  Since this is using langchain, you can add whatever retrievers and tools you want to the `serve.py` python script, so have at it.  Elastic has some python retrievers, which you can use to make a RAG tool
+## Prerequisites
 
-I also used LangSmith with this sample, which is very nice if you want to see what the LLM is actually doing.  You can go to [smith.langchain.com](https://smith.langchain.com/) to sign up and get a LangChain API key.  You don't have to use it, but it's pretty informative and I'd recommend looking at it  
+To run the server and host the web component, you need:
 
-To make this a little safer to put online if you want to, I have implemented a very basic API key.  You can just pass an arbitraty key of your liking as a query parameter.  You can also just directly pass it to the web component via an attribute.  The backend API `serve.py` will check for the API key in the HTTP header, so you can put this out on the internet and nobody is going to be able to hit the service without knowing your key.
+* **Python 3.x**
+* **pip** (Python package installer)
 
-### Configuration  
+## Setup and Installation
 
-You will need to set up a `.env` file with some environment variables to get this thing going:
+### 1. Backend Dependencies
 
-```bash
-    OPENAI_API_KEY=<Your Open AI API key>
-    TAVILY_API_KEY=<Your Tavily API key>
-    LANGCHAIN_API_KEY=<Your Langchain API key>
-    LANGCHAIN_TRACING_V2=true
-    API_KEY=<Your super secret made up API key> 
-```
-
-If you are going to use the elastic rag tool, you'll need environment vars for that as well:  
-
-```bash
-    ES_USER=<Your elastic userid>  
-    ES_PASSWORD=<Your elastic password>
-    ES_URL=<The URL to the ES api>
-```
-
-You will want to modify the `elastic_rag_tool.py` module so that it suits your purposes.  This is just a sample  
-that performs a dense vector search, but you can do whatever you want.  Just have to change a couple of functions.  
-
-That's it... after that you're ready to run it  
-
-### Running it locally
-
-I would recommend doing this in a python virtual environment.  I used python 3.12  
+Install the required Python packages for the FastAPI server:
 
 ```bash
 pip install -r requirements.txt
+```
+
+The required packages are `fastapi`, `uvicorn`, and `gunicorn`.
+
+## Running the Project
+
+### Local Development
+
+The project uses `uvicorn` to run the FastAPI server locally.
+
+```bash
 python serve.py
 ```
 
-This will start a server on port 8000.  To access your chatbot, just go to [http://localhost:8000/index.html](http://localhost:8000/index.html)  
+The server will run on `http://localhost:8000`. Access the chatbot by navigating to:
 
-This little toy doesn't display error messages.  If it's not working, you'll have to look in the browser javascript console or in stdout on your python environment.
+```bash
+http://localhost:8000/
+```
+
+### Deployment (e.g., Heroku)
+
+The `Procfile` is configured for cloud deployment using `gunicorn`:
+
+```bash
+web: gunicorn -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT serve:app
+```
+
+## Chatbot Configuration (In-Browser)
+
+Upon launching the application, you must configure the Agentforce connection details.  
+  
+Some setup is required with the Salesforce org.  The app relies on using OAuth Client Credentials, and you will also  
+need to have an agent configured, activated, and connected to the client credentials within your org.  
+The Agent ID can be retrieved by exracting it from the URL in the Agent Builder in Salesforce.  
+You will also need to enable CORS support for OAuth with your Salesforce environment.  
+
+1. Click the **"Config"** button in the chat interface.
+2. Enter the following details, which will be saved to your browser's local storage:
+      * **Client ID**
+      * **Client Secret**
+      * **Agent ID**
+      * **My Domain URL** (e.g., `https://domain.my.salesforce.com`)
+3. Click **"Save & Connect"**.
+
+The chatbot will attempt to retrieve an access token and start a new session with your specified Agentforce parameters.
+
+## Project Structure
+
+```bash
+.
+├── .env                  # Environment variables for configuration
+├── Procfile              # Gunicorn process definition for deployment
+├── requirements.txt      # Python dependencies (FastAPI, uvicorn, gunicorn)
+├── serve.py              # FastAPI server setup and static file serving
+└── public/               # Frontend (Web Component) files
+    ├── index.html        # Main HTML file hosting the generic-chatbot component
+    ├── GenericChatbot.js # Custom web component logic (Agentforce API calls, UI rendering)
+    ├── ConvertMarkdown.js# Custom web component for markdown rendering
+    └── style.css         # CSS for the chatbot and layout
+```
