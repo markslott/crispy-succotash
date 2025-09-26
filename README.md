@@ -11,9 +11,8 @@ educational purposes only.
 * **Salesforce Agentforce API Integration:** Handles the full conversational flow, including session management (start, end) and message streaming.
 * **OAuth 2.0 Client Credentials Flow:** Securely retrieves the necessary access token for Agentforce API calls using the configured Client ID and Secret.
 * **Streaming Response:** Messages from the Agentforce API are streamed back to the UI for a real-time user experience.
-* **In-Browser Configuration:** All required connection details (`Client ID`, `Client Secret`, `Agent ID`, `My Domain URL`) can be configured and persisted in the browser's local storage via a dedicated configuration modal.
-* **Markdown Support:** Assistant responses are rendered with markdown formatting for enhanced readability, using the `marked` library via a custom `<convert-markdown>` element.
-
+* **In-Browser Configuration:** All required connection details (`Client ID`, `Client Secret`, `Agent ID`, `My Domain URL`) can be configured and persisted in the browser's local storage via a dedicated configuration modal.  So you can set it once and forget it.  
+* **Markdown Support:** Assistant responses are rendered with markdown formatting for enhanced readability, using the `marked` library via a custom `<convert-markdown>` element.  If the response comes back as markdown format, it'll look normal.  probably.  
 
 ## Prerequisites
 
