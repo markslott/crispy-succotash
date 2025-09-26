@@ -2,7 +2,8 @@
 
 A standalone web component for creating a modern, streaming chat interface that interacts with the Salesforce Agentforce API. This project uses a lightweight Python FastAPI server to host the front-end application and manage dependencies.  
   
-The intent of this is to have a working example of a custom built chatbot interacting with the Agentforce API in as simple a fashion as possible.  
+The intent of this is to have a working example of a custom built chatbot interacting with the Agentforce API in as simple a fashion as possible.  This is just a demo app for seeing how things work, y'all.  I was curious, so I built it and shared it.  This is just for  
+educational purposes only.  
 
 ## Key Features
 
