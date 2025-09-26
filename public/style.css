@@ -1,0 +1,63 @@
+/* Salesforce Lightning Design System inspired base styles */
+:root {
+    --slds-color-primary: #0070d2;
+    --slds-color-background-primary: #f3f2f2;
+    --slds-color-text-default: #181818;
+}
+
+body {
+    /* Salesforce-like background color */
+    background-color: var(--slds-color-background-primary);
+    color: var(--slds-color-text-default);
+    font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overscroll-behavior-y: none;
+    box-sizing: border-box;
+}
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    height: 100vh; /* Make sure the box takes the full viewport height */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.box > div {
+    width: 100%;
+    max-width: 1024px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header-container {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.header-container h2 {
+    color: var(--slds-color-primary);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+}
+  
+generic-chatbot {
+    width: 100%;
+    max-width: 1024px;
+    /* This makes the component take up all the remaining space in the flex parent (.box) */
+    flex: 1; 
+    
+    /* SLDS Card style for the chat component */
+    background: white; 
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    overflow: hidden; 
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salesforce Agentforce Chatbot</title>
+    <script type="module" src="./GenericChatbot.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="box" class="box">
+      <div class="header-container">
+        <h2>Custom Agentforce Chatbot</h2>
+      </div>
+
+      <generic-chatbot id="chatbot"></generic-chatbot>
+    </div>
+
+    <script>
+      // Use ResizeObserver to pass the calculated height to the custom element's attribute
+      let resizeObserver = new ResizeObserver((entries) => {
+        let bot = document.getElementById("chatbot");
+        // Pass the height of the chatbot component container
+        bot.setAttribute("height", bot.getBoundingClientRect().height);
+      });
+      // Observe the main container of the chatbot component
+      resizeObserver.observe(document.getElementById("box"));
+    </script>
+  </body>
+</html>
