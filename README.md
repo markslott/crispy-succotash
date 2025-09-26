@@ -5,6 +5,9 @@ A standalone web component for creating a modern, streaming chat interface that 
 The intent of this is to have a working example of a custom built chatbot interacting with the Agentforce API in as simple a fashion as possible.  This is just a demo app for seeing how things work, y'all.  I was curious, so I built it and shared it.  This is just for  
 educational purposes only.  
 
+Also, I built this as a very generic web component.  This component should be able to be run just about anywhere. This is as basic as  
+I could make it.  
+
 ## Key Features
 
 * **Web Component:** The chatbot is encapsulated as a `<generic-chatbot>` custom element, making it highly portable and easy to embed in any web page or framework (e.g., Salesforce Lightning Web Components, Aura, or any standard web app).
